@@ -1,0 +1,16 @@
+/*
+  Design tokens: the named colours, fonts and sizes every screen uses.
+  `static` makes Tailwind always output them as CSS variables, even before a class uses them,
+  so var(--color-...) also works in inline styles.
+  brand and page are read from the MTN TV+ Figma (mobile home, 2026-11-19).
+  surface, muted and the font are still placeholders until confirmed.
+*/
+@theme static {
+  --color-brand: #ffc90d;
+  --color-page: #000000;
+  --color-surface: #16161d;
+  --color-text: #ffffff;
+  --color-muted: #a1a1aa;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+}
