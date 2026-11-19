@@ -1,5 +1,7 @@
 /* Styles that apply to the whole app. Loaded once, in main.jsx. */
 @import "tailwindcss";
+/* DM Sans, every weight from 100 to 1000 in one file, served from our own site (no Google request) */
+@import "@fontsource-variable/dm-sans";
 @import "./design-tokens.css";
 
 html,

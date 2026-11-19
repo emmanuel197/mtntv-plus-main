@@ -41,7 +41,10 @@ Only on MTN TV+, Upcoming TV Shows.
   "Watch Now" samples as `#FAC80D` and "Get Bundle" as ~`#E1B314` (likely opacity/gradient over the hero) — use `#FFC90D` unless the designer says otherwise.
 - Text white `#FFFFFF`. ✅ VERIFIED (pixel sample)
 - Yellow glow ellipse `#C2B801` (decorative). 🔶 LIKELY
-- Font family — can't be read: no published styles, and the REST API stopped answering (below). ❓ Ask the designer.
+- Secondary text: white at 65% opacity (`#FFFFFF 65%`), 10px, line height 100% — from the user's Figma inspect screenshot. ✅ VERIFIED
+  That text's inspect panel says **SF Pro** (Apple's system font, can't be shipped on the web) → we use DM Sans.
+- Font: **DM Sans** (user, 2026-11-19); weights vary per text, so set per element. Loaded from `@fontsource-variable/dm-sans`.
+- Card/surface colour: not in Figma → `#1A1A1A` picked by us; the user will tune it.
 
 ## REST access stopped (2026-11-19)
 After ~8 calls, every Figma REST call (file data and image export) timed out. Figma caps REST API calls for
