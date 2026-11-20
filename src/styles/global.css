@@ -1,7 +1,8 @@
 /* Styles that apply to the whole app. Loaded once, in main.jsx. */
 @import "tailwindcss";
-/* DM Sans, every weight from 100 to 1000 in one file, served from our own site (no Google request) */
+/* DM Sans, every weight from 100 to 1000, normal + italic, served from our own site (no Google request) */
 @import "@fontsource-variable/dm-sans";
+@import "@fontsource-variable/dm-sans/wght-italic.css";
 @import "./design-tokens.css";
 
 html,
@@ -10,9 +11,62 @@ body,
   height: 100%;
 }
 
+/*
+  Desktop scaling (768px and wider). The web designs are 1728px wide. Instead of fixed pixels,
+  the desktop screens use "design pixels": --d is one pixel of the 1728px design, so
+  w-[calc(320*var(--d))] means "320 pixels in Figma". The base text size follows the window width
+  (16px at 1728, about 13px at 1440, 7px at 768), so the whole page shrinks and grows in proportion —
+  the same idea WONA/AfriPlay used. Phones keep normal sizes (1rem = 16px).
+*/
+:root {
+  --d: calc(1rem / 16);
+}
+@media (min-width: 768px) {
+  html {
+    font-size: calc(clamp(768px, 100vw, 1728px) / 108);
+  }
+}
+
 body {
   background: var(--color-page);
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Double-tap "like" burst on reels (shorts/LikeBurst.jsx) — WONA's animation */
+@keyframes like-tint {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes like-pop {
+  0% { transform: scale(0.2); opacity: 0; }
+  35% { transform: scale(1.12); opacity: 1; }
+  55% { transform: scale(1); }
+  80% { opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+@keyframes like-ring {
+  0% { transform: scale(0.45); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+@keyframes like-ray {
+  0% { transform: translateX(var(--like-from)) scaleX(0.3); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateX(var(--like-to)) scaleX(1); opacity: 0; }
+}
+@keyframes like-dot {
+  0% { transform: translateY(calc(-1 * var(--like-from))) scale(0.4); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(calc(-1 * var(--like-to))) scale(1); opacity: 0; }
+}
+
+/* Sideways-scrolling rows: allow swiping but hide the scrollbar (class: no-scrollbar) */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -5,16 +5,25 @@
   Source: MTN TV+ Figma, mobile home (2026-11-19).
 */
 @theme static {
-  /* MTN yellow: logo, active tab, Watch Now, Get Bundle */
+  /* MTN yellow: logo, active tab, Watch Now, Get Bundle, channel tile borders */
   --color-brand: #ffc90d;
   /* page background */
   --color-page: #000000;
   /* cards and panels — not in Figma, picked by us; adjust freely */
   --color-surface: #1a1a1a;
+  /* floating phone tab bar background */
+  --color-tabbar: #1c2222;
   /* main text */
   --color-text: #ffffff;
   /* secondary text, e.g. "85% watched · 14 min left": white at 65% */
   --color-muted: rgb(255 255 255 / 0.65);
+  /* red "LIVE" badge */
+  --color-live: #b42318;
+  /* watched-progress bar on live cards */
+  --color-progress: #de003d;
+
+  /* left/right page margin on phones (Figma: 23px) → classes like px-page, ml-page */
+  --spacing-page: 23px;
 
   /* Weights vary per text in the designs; use font-normal / font-medium / font-bold etc. per element */
   --font-sans: "DM Sans Variable", "DM Sans", system-ui, sans-serif;

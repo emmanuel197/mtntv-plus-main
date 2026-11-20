@@ -20,10 +20,13 @@ Route list: `navigation/AppRouter.jsx`. Tab list shared by both bars: `navigatio
 | `/shorts` | `shorts/ShortsPage.jsx` |
 | `/search` | `search/SearchPage.jsx` |
 | `/more` | `my-account/MorePage.jsx` |
-| `/bundles` | `my-account/BundlesPage.jsx` (Get Bundle pill) |
-| `/notifications` | `my-account/NotificationsPage.jsx` (bell) |
+| `/bundles` | `bundles/BundlesPage.jsx` (Get Bundle pill) · `/subscription-history` → `bundles/SubscriptionHistoryPage.jsx` |
+| `/notifications` | `notifications/NotificationsPage.jsx` (bell) |
+| `/profile`, `/my-stuff`, `/my-library` | `my-account/` placeholders (opened from More) |
+| `/shorts/:id` | `shorts/ShortsPlayerPage.jsx` (reel player) |
+| `/signin`, `/signup` | `sign-in-and-sign-up/` placeholders |
 | `*` | `navigation/NotFoundPage.jsx` |
-All pages are placeholders (`shared-ui/PagePlaceholder.jsx`). Logo is a stand-in (`shared-ui/MtnTvLogo.jsx`) until the real file arrives.
+Home is built (mobile, sample data — see `figma-designs.md` measurements); other pages are placeholders (`shared-ui/PagePlaceholder.jsx`). Logo: `images-and-icons/mtn-tv-plus-logo.png` (192px copy of the user-supplied `-original.png`), used via `shared-ui/MtnTvLogo.jsx`.
 Desktop navbar layout is a guess — the web Figma frames weren't readable (REST limit). ⚠️ ASSUMPTION
 Hosting note: a single-page app needs the server to send `index.html` for every path (Vite dev does this already).
 
@@ -46,11 +49,15 @@ src/
   video-player/            HLS player, trailers, keep-watching bookmarks
   live-tv/                 channels, live playback, TV guide
   search/                  search screen + calls
-  my-account/              profile, subscriptions, support, sign-out
+  bundles/                 Get Bundle: plans, subscribe pop-up, subscription history
+  notifications/           the inbox: shared message list (bell dot, More dot) + Notifications page
+  my-account/              More tab, profile, My Stuff, My Library, sign-out
   shorts/                  Shorts tab: vertical clips
   shared-ui/               UI pieces used by several areas (buttons, cards, rows)
-  helpers/                 small functions used by several areas (image URLs, time formatting)
-  images-and-icons/        logos, icons, static images
+  helpers/                 small functions used by several areas (useIsDesktop, later image URLs, time formatting)
+  sample-content/          stand-in catalogue + pictures shared by web Home and Search (delete when the server is connected)
+  movies/                  Movies page (desktop navbar link)
+  images-and-icons/        app-wide pictures (logo, icons). Pictures for one area live in that area (e.g. home/sample-images/)
 ```
 File names say what they are: `HomePage.jsx` (a screen), `home-requests.js` (server calls),
 `home-state.js` (Redux slice), `BannerCarousel.jsx` (a part of the screen).
