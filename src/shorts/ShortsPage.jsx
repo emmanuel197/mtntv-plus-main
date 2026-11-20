@@ -1,5 +1,6 @@
 // The Shorts landing page: tabs, round previews, the LIVE reel, Trending Now, then the For You grid.
 // Every picture opens the full-screen player at /shorts/<id>.
+// Wide screens (768px+) get the desktop version instead: desktop/DesktopShortsFeed.jsx.
 //
 // Spacing (Figma, measured from the screenshots): tabs → 27px → circles 74px → 24px → live card 194px
 //   → 21px → "Trending Now" → 16px → cards 110×130 → "For You" → 2 columns, 8px apart.
@@ -10,10 +11,15 @@ import CategoryTabs from '@/shared-ui/CategoryTabs.jsx'
 import LiveReelCard from './LiveReelCard.jsx'
 import TrendingShortCard from './TrendingShortCard.jsx'
 import ForYouTile from './ForYouTile.jsx'
+import DesktopShortsFeed from './desktop/DesktopShortsFeed.jsx'
+import { useIsDesktop } from '@/helpers/useIsDesktop.js'
 import { circles, liveReel, trendingNow, forYou } from './shorts-sample-data.js'
 
 export default function ShortsPage() {
   const [category, setCategory] = useState('All')
+  const isDesktop = useIsDesktop()
+  // Only one version is drawn: desktop or phone (hooks above must run before this return)
+  if (isDesktop) return <DesktopShortsFeed />
 
   // Deal the For You tiles into two columns: even positions left, odd positions right
   const leftColumn = forYou.filter((_, i) => i % 2 === 0)

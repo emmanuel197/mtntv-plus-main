@@ -56,7 +56,7 @@ src/
   shared-ui/               UI pieces used by several areas (buttons, cards, rows)
   helpers/                 small functions used by several areas (useIsDesktop, later image URLs, time formatting)
   sample-content/          stand-in catalogue + pictures shared by web Home and Search (delete when the server is connected)
-  movies/                  Movies page (desktop navbar link)
+  movies/                  Movies page, movie + series details pages
   images-and-icons/        app-wide pictures (logo, icons). Pictures for one area live in that area (e.g. home/sample-images/)
 ```
 File names say what they are: `HomePage.jsx` (a screen), `home-requests.js` (server calls),

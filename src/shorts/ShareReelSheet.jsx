@@ -4,6 +4,7 @@
 //
 // WhatsApp / Facebook / X open their share pages in a new tab. Instagram has no web share page,
 // so it copies the link (to paste into Instagram). Copy Link copies the reel's address.
+// `desktop`: on a wide screen the same box sits in the middle as a pop-up instead of a bottom sheet.
 import { useState } from 'react'
 import { Check } from 'lucide-react'
 import whatsappIcon from './share-icons/whatsapp.svg'
@@ -13,7 +14,7 @@ import instagramIcon from './share-icons/instagram.svg'
 import copyLinkIcon from './share-icons/copy-link.svg'
 import { formatCount } from './format-count.js'
 
-export default function ShareReelSheet({ reel, likeCount, onClose }) {
+export default function ShareReelSheet({ reel, likeCount, onClose, desktop = false }) {
   const [copied, setCopied] = useState(false)
   const url = `${window.location.origin}/shorts/${reel.id}`
   const text = encodeURIComponent(reel.title)
@@ -42,12 +43,17 @@ export default function ShareReelSheet({ reel, likeCount, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 z-[70] flex flex-col justify-end bg-black/50" onClick={onClose}>
+    <div
+      className={`fixed inset-0 z-[70] flex bg-black/50 ${desktop ? 'items-center justify-center' : 'flex-col justify-end'}`}
+      onClick={onClose}
+    >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="rounded-t-[28px] border-t border-white/15 bg-[#2b2b2b]/95 px-[22px] pt-2.5 pb-8 backdrop-blur-xl"
+        className={`bg-[#2b2b2b]/95 px-[22px] pt-2.5 pb-8 backdrop-blur-xl ${
+          desktop ? 'w-[400px] rounded-[28px] border border-white/15' : 'rounded-t-[28px] border-t border-white/15'
+        }`}
       >
-        <span className="mx-auto block h-1 w-9 rounded-full bg-white/40" />
+        {!desktop && <span className="mx-auto block h-1 w-9 rounded-full bg-white/40" />}
         <h2 className="mt-4 text-center text-sm font-semibold">Share Reel</h2>
 
         <div className="mt-4 flex items-center gap-3 border-b border-white/10 pb-4">

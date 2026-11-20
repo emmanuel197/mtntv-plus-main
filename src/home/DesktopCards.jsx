@@ -2,7 +2,9 @@
 //   ShortCircle 227 round · WideCard 330×179 (Keep Watching / Live On Tv Now) · PosterCard 320×441
 //   (hover shows title, info, Play and +; optional big rank number) · GenreCard 330×155 · ChannelCard 331×191.
 import { Link } from 'react-router'
-import { Play, Plus } from 'lucide-react'
+import { Play, Plus, Check } from 'lucide-react'
+import { detailsPath } from '@/helpers/details-path.js'
+import { useIsInMyStuff, toggleMyStuff } from '@/my-account/my-stuff-store.js'
 
 const d = (n) => `calc(${n} * var(--d))`
 
@@ -44,9 +46,15 @@ export function WideCard({ item, live = false }) {
 }
 
 // Poster with a hover panel (title, "2024 · 1h 53m", Play and +). `rank` adds the big yellow Top-10 number.
+// Clicking it opens the title's details page; "+" adds it to / removes it from My Stuff.
 export function PosterCard({ item, rank, width = 320, height = 441 }) {
+  const saved = useIsInMyStuff(item.id)
   return (
-    <div className="group relative shrink-0 overflow-hidden rounded-[calc(10*var(--d))]" style={{ width: d(width), height: d(height) }}>
+    <Link
+      to={detailsPath(item)}
+      className="group relative shrink-0 overflow-hidden rounded-[calc(10*var(--d))]"
+      style={{ width: d(width), height: d(height) }}
+    >
       <img src={item.image} alt={item.title} loading="lazy" className="size-full object-cover transition-transform duration-300 group-hover:scale-105" />
 
       {rank && (
@@ -65,26 +73,41 @@ export function PosterCard({ item, rank, width = 320, height = 441 }) {
           <p className="text-[calc(15*var(--d))] leading-none text-white/65">{item.metadata}</p>
         </div>
         <div className="flex items-end gap-[calc(10*var(--d))]">
-          <button type="button" className="flex items-center gap-[calc(5*var(--d))] rounded-full bg-[#80650e] px-[calc(17*var(--d))] py-[calc(10*var(--d))] text-[calc(15*var(--d))] font-medium">
+          {/* "Play" is part of the link (opens the details page, where Watch Now is) */}
+          <span className="flex items-center gap-[calc(5*var(--d))] rounded-full bg-[#80650e] px-[calc(17*var(--d))] py-[calc(10*var(--d))] text-[calc(15*var(--d))] font-medium">
             <Play className="size-[calc(14*var(--d))]" fill="currentColor" />
             Play
-          </button>
-          <button type="button" aria-label="Add to My Stuff" className="flex size-[calc(39*var(--d))] items-center justify-center rounded-full bg-[#80650e]">
-            <Plus className="size-[calc(16*var(--d))]" />
+          </span>
+          <button
+            type="button"
+            aria-label={saved ? 'Remove from My Stuff' : 'Add to My Stuff'}
+            aria-pressed={saved}
+            onClick={(e) => {
+              e.preventDefault() // stay on this page: don't also follow the poster's link
+              toggleMyStuff(item)
+            }}
+            className="flex size-[calc(39*var(--d))] items-center justify-center rounded-full bg-[#80650e]"
+          >
+            {saved ? <Check className="size-[calc(16*var(--d))]" /> : <Plus className="size-[calc(16*var(--d))]" />}
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
+// Opens the Movies page filtered to this genre
 export function GenreCard({ item }) {
   return (
-    <div className="relative shrink-0 overflow-hidden rounded-[calc(10*var(--d))]" style={{ width: d(330), height: d(155) }}>
+    <Link
+      to={`/movies?category=${item.id}`}
+      className="relative shrink-0 overflow-hidden rounded-[calc(10*var(--d))]"
+      style={{ width: d(330), height: d(155) }}
+    >
       <img src={item.image} alt="" loading="lazy" className="size-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
       <span className="absolute bottom-[calc(14*var(--d))] left-[calc(14*var(--d))] text-[calc(18*var(--d))] font-semibold">{item.label}</span>
-    </div>
+    </Link>
   )
 }
 

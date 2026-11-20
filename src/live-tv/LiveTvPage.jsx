@@ -1,5 +1,6 @@
 // The Live TV screen: category chips, the featured live programme (All and Sports only),
 // then the list of live channels for the chosen category.
+// This is the PHONE page; on desktop (768px and wider) it shows DesktopLiveTv.jsx instead.
 //
 // Vertical spacing (Figma minus the phone's 47px clock bar):
 //   chips 57px from the top · thin line · featured block · list title · thin line · channel rows
@@ -7,12 +8,19 @@ import { useState } from 'react'
 import LiveCategoryChips from './LiveCategoryChips.jsx'
 import FeaturedLiveProgram from './FeaturedLiveProgram.jsx'
 import LiveChannelRow from './LiveChannelRow.jsx'
+import DesktopLiveTv from './DesktopLiveTv.jsx'
 import { categories, featuredProgram, channels } from './live-tv-sample-data.js'
+import { useIsDesktop } from '@/helpers/useIsDesktop.js'
 
 export default function LiveTvPage() {
+  const isDesktop = useIsDesktop()
   const [category, setCategory] = useState('All')
   // null = nothing tapped yet → the first row in the list counts as selected (as in Figma)
   const [selectedId, setSelectedId] = useState(null)
+
+  // Desktop gets its own page; only one of the two is ever drawn.
+  // (This comes after the hooks above: React needs the same hooks called on every render.)
+  if (isDesktop) return <DesktopLiveTv />
 
   const visibleChannels = category === 'All' ? channels : channels.filter((c) => c.category === category)
   const showFeatured = category === 'All' || category === featuredProgram.category

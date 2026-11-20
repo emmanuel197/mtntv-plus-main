@@ -15,9 +15,10 @@ import animationImg from './sample-images/category-animation.webp'
 export const MIN_QUERY_LENGTH = 2
 
 // What a first-time visitor sees under "Recent Searches" (after that, their own searches are remembered)
-export const startingRecentSearches = ['Action Movies', 'The Witcher', 'Special Tv shows', 'Squid Game', 'Baby Driver']
+// Same samples as AfriPlay's Search (they're in the shared catalogue, so tapping one finds results)
+export const startingRecentSearches = ['Action', 'Comedy', 'Prison Break', 'Vis a Vis', 'Squid Game', 'Baby Driver', 'Drama']
 
-export const trendingSearches = ['Black Panther: Wakanda Forever', 'The Last of Us', 'Avatar: The Way of Water', 'House of the Dragon', 'Succession']
+export const trendingSearches = ['Soyayya Ruwan Zuma', 'Chief of War', 'The Chi', '1992', 'Sweet Home']
 
 export const categories = [
   { id: 'action', label: 'Action', image: actionImg },

@@ -1,6 +1,10 @@
-import PagePlaceholder from '@/shared-ui/PagePlaceholder.jsx'
+// My Stuff (/my-stuff) — the titles you saved. Desktop and phone look different, so this file
+// only picks which one to draw (see helpers/useIsDesktop.js for why we don't draw both).
+import { useIsDesktop } from '@/helpers/useIsDesktop.js'
+import DesktopMyStuff from './DesktopMyStuff.jsx'
+import PhoneMyStuff from './PhoneMyStuff.jsx'
 
-// From WONA's More menu; screen comes later.
 export default function MyStuffPage() {
-  return <PagePlaceholder title="My Stuff" note="Titles you save show here." />
+  const isDesktop = useIsDesktop()
+  return isDesktop ? <DesktopMyStuff /> : <PhoneMyStuff />
 }

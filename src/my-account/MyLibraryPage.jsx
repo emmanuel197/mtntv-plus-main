@@ -1,6 +1,10 @@
-import PagePlaceholder from '@/shared-ui/PagePlaceholder.jsx'
+// My Library (/my-library) — titles you rented or bought. Desktop and phone look different, so this
+// file only picks which one to draw.
+import { useIsDesktop } from '@/helpers/useIsDesktop.js'
+import DesktopMyLibrary from './DesktopMyLibrary.jsx'
+import PhoneMyLibrary from './PhoneMyLibrary.jsx'
 
-// From WONA's More menu; screen comes later.
 export default function MyLibraryPage() {
-  return <PagePlaceholder title="My Library" note="Your rentals and purchases show here." />
+  const isDesktop = useIsDesktop()
+  return isDesktop ? <DesktopMyLibrary /> : <PhoneMyLibrary />
 }

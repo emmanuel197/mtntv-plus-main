@@ -11,7 +11,11 @@ import { useEffect, useRef, useState } from 'react'
 const SLIDE_MS = 450
 const DOUBLE_TAP_MS = 300
 
-export function useReelSwipe({ canNext, canPrev, onNext, onPrev, onDoubleTap, disabled }) {
+// getDistance: how far one reel slides. The phone player fills the screen (the default);
+// the desktop player passes the height of its 9:16 card.
+const screenHeight = () => window.innerHeight
+
+export function useReelSwipe({ canNext, canPrev, onNext, onPrev, onDoubleTap, disabled, getDistance = screenHeight }) {
   const [offset, setOffset] = useState(0) // how far the reels are pushed up/down, in px
   const [animating, setAnimating] = useState(false) // true = ease the movement, false = follow the finger exactly
   const touch = useRef(null)
@@ -27,7 +31,7 @@ export function useReelSwipe({ canNext, canPrev, onNext, onPrev, onDoubleTap, di
       return
     }
     busy.current = true
-    setOffset(direction > 0 ? -window.innerHeight : window.innerHeight)
+    setOffset(direction > 0 ? -getDistance() : getDistance())
     setTimeout(() => {
       busy.current = false
       setAnimating(false)
@@ -41,8 +45,9 @@ export function useReelSwipe({ canNext, canPrev, onNext, onPrev, onDoubleTap, di
   useEffect(() => {
     if (disabled) return
     const onKey = (e) => {
-      if (e.key === 'ArrowDown') slide(1)
-      if (e.key === 'ArrowUp') slide(-1)
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+      e.preventDefault() // stop the browser also scrolling the page (desktop player)
+      slide(e.key === 'ArrowDown' ? 1 : -1)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -93,5 +98,6 @@ export function useReelSwipe({ canNext, canPrev, onNext, onPrev, onDoubleTap, di
     transition: animating ? `transform ${SLIDE_MS}ms cubic-bezier(0.4, 0, 0.2, 1)` : 'none',
   }
 
-  return { style, handlers }
+  // next/prev let buttons (the desktop ↑ ↓ arrows) slide the same way a swipe does
+  return { style, handlers, next: () => slide(1), prev: () => slide(-1) }
 }

@@ -2,6 +2,7 @@
 // the reel flashes yellow, a glossy yellow heart pops inside a white-ringed disc, two yellow rings
 // and six short rays spread out with small glowing dots, then it all fades (~0.9 s).
 // Everything is sized in "em" so the one `size` (outer width) scales the whole burst.
+// `size` is pixels (phone: 250) or a CSS length (desktop: "calc(260 * var(--d))").
 // The animations (like-tint, like-pop, like-ring, like-ray, like-dot) are in styles/global.css.
 const RAYS = [-62, -18, 28, 152, 198, 242] // angles in degrees
 const DOTS = [-80, -5, 60, 110, 175, 250]
@@ -13,7 +14,8 @@ export default function LikeBurst({ size = 250 }) {
       <div
         aria-hidden
         className="pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2"
-        style={{ width: size, height: size, fontSize: size / 24 }}
+        // 1em = a 24th of the width, whether size is a number or a CSS length
+        style={{ width: size, height: size, fontSize: typeof size === 'number' ? size / 24 : `calc(${size} / 24)` }}
       >
         <span className="absolute inset-0 rounded-full border-[0.22em] border-brand/60" style={{ animation: 'like-ring 900ms ease-out forwards' }} />
         <span className="absolute inset-[3.5em] rounded-full border-[0.24em] border-brand/85" style={{ animation: 'like-ring 900ms 60ms ease-out both' }} />

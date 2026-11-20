@@ -17,8 +17,8 @@ export default function AppLayout() {
       <PhoneTopBar />
       {/* Phones: no top padding — the top bar floats over the page, as in Figma.
           Bottom padding keeps the last row from hiding under the floating tab bar.
-          Desktop: room for the 97px (design) navbar, except on Home. */}
-      <main className={`pb-28 md:pb-0 ${onHome ? '' : 'md:pt-[calc(97*var(--d))]'}`}>
+          Desktop: room for the 97px (design) navbar, except on Home, on the dark grey (#1B1B1B) page. */}
+      <main className={`pb-28 md:bg-[#1b1b1b] md:pb-0 ${onHome ? '' : 'md:pt-[calc(97*var(--d))]'}`}>
         <Outlet />
       </main>
       <SiteFooter />

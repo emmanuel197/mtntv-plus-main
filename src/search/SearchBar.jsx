@@ -1,4 +1,5 @@
-// The search box. Figma: 51px tall pill, light grey (#B2B2B2), 2px yellow border, dark text.
+// The search box, AfriPlay/WONA style: 52px tall dark see-through pill with a faint border
+// that turns yellow while you're typing (focus-within), white text.
 // Right side: × to clear (while there's text) or a microphone for voice search (while empty).
 // The Figma screens don't show where the mic sits; it's here because they include "Voice input failed".
 import { forwardRef } from 'react'
@@ -9,8 +10,8 @@ const SearchBar = forwardRef(function SearchBar(
   ref,
 ) {
   return (
-    <div className="flex h-[51px] items-center gap-3 rounded-full border-2 border-[#f5c621] bg-[#b2b2b2] px-4 text-black">
-      <Search size={20} strokeWidth={2} className="shrink-0" />
+    <div className="flex h-[52px] items-center gap-3 rounded-full border border-white/15 bg-white/10 px-5 text-white transition-colors focus-within:border-brand md:h-[calc(64*var(--d))] md:gap-[calc(14*var(--d))] md:px-[calc(28*var(--d))]">
+      <Search strokeWidth={2} className="size-[18px] shrink-0 text-white/70 md:size-[calc(24*var(--d))]" />
       <input
         ref={ref}
         value={value}
@@ -23,7 +24,7 @@ const SearchBar = forwardRef(function SearchBar(
         }}
         placeholder={placeholder}
         enterKeyHint="search"
-        className="min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-[#1a1a1a]"
+        className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-white/40 md:text-[calc(20*var(--d))]"
       />
       {value ? (
         <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={onClear} aria-label="Clear search">

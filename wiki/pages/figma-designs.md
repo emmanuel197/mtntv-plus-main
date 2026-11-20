@@ -147,7 +147,7 @@ Source: 6 user screenshots (×2.21 to 1728; last one ×1.70); sizes from WONA's 
 Scaling: from 768px wide, `html` font-size = clamp(768px,100vw,1728px)/108, and `--d` = one design pixel (1rem/16) → `w-[calc(320*var(--d))]` = 320px of the 1728 design.
 | Part | Design px |
 |---|---|
-| Navbar | 97 tall, 53 margin, logo 58, icons 24, labels 15, 36 apart; Home · Live Tv · Shorts · Tv Channels · Movies · My stuff; search, bell (red dot), avatar 36 |
+| Navbar | floating pill (WONA style, 2026-11-20): 16 from top, 53 margins, rounded-full black/40 + blur 20, logo 50 + links grouped left; previously 97 tall full-width bar, logo 58, icons 24, labels 15, 36 apart; Home · Live Tv · Shorts · Movies · My stuff (Tv Channels removed — user, 2026-11-20); search, bell (red dot), avatar 36 |
 | Hero | height min(1117, window); content 69 from bottom; tag pill; title art 136×375; ★ rating · maturity · year (20); genre chips `#262422` (18); description 624 wide (20); Watch Now 55 tall yellow; My Stuff `#535352`; dots bottom-right; 8 s per slide |
 | Page | bg `#1B1B1B`; rows 48 apart, left margin 53, rows run off the right edge; titles 28 bold italic; 30 title→cards |
 | Shorts circles | 227, gap 40, yellow duration badge |
@@ -157,3 +157,27 @@ Scaling: from 768px wide, `html` font-size = clamp(768px,100vw,1728px)/108, and 
 | Promo band | full width (stand-in cut from screenshot) |
 | Footer | 339 tall, `#080808`, logo 84, socials 36, 4 link columns (18), ©2007-2026 MTN TV+ |
 ❓ Needed exports: Michael concert backdrop (hero) and the "Celebrating 30 Years" band at full size.
+
+### Search = AfriPlay's layout (user, 2026-11-20) — supersedes the two notes above
+- **Landing (box not tapped, empty):** the tabbed browse view of the whole catalogue — All / Movies / Tv Shows / TV Channels, Best Results card, groups "Movies (11)"… (AfriPlay screenshot). 🪦 STALE: "landing = Top 5 Trending + categories".
+- **Box tapped (or 1 character):** Recent Searches (5 shown, ×, "See More ›"), Top 5 Trending (28px outlined numbers), Browse By Categories. The MTN "Type 2+ characters" hint shows once 1 character is typed.
+- Search bar: AfriPlay/WONA style — 52px dark see-through pill, white/15 border → yellow while focused. 🪦 STALE: grey #B2B2B2 bar.
+- Tiles/Best Results border: brand yellow 40%. Sample recent/trending lists = AfriPlay's (titles exist in the catalogue).
+- **Web:** same states, md: sizes in design px — 53 margins, bar sticks under the navbar (64 tall), results 6 posters / 4 channels per row, Best Results 420 tall, Recent + Trending side by side, categories 5 per row.
+
+## Web screens built from WONA (2026-11-20) — MTN web Figma not readable (REST limit), user: "same structure as WONA/AfriPlay"
+| Screen | Route | Files | WONA source |
+|---|---|---|---|
+| Live TV | `/live-tv` | `live-tv/DesktopLiveTv.jsx` + DesktopCategoryTabs, DesktopFeaturedProgram (scoreboard), LiveChannelsSidebar, OnAirSchedule/ScheduleRow, DesktopChannelCard, LiveToast | `LiveTvPage` + `sections/liveTv/*` |
+| TV Guide | `/tv-guide` | `live-tv/TvGuidePage.jsx` (desktop + phone) | `TvGuidePage` |
+| 🪦 Tv Channels | ~~`/tv-channels`~~ | removed 2026-11-20 at the user's request (navbar link, page, Live TV "See All") | — |
+| Shorts feed | `/shorts` | `shorts/desktop/DesktopShortsFeed.jsx` + chips, avatar rail, grid, live banner, trending sidebar | `ShortsPage` + `sections/shorts/*` |
+| Reel player | `/shorts/:id` | `shorts/desktop/DesktopReelPlayer.jsx` + ReelPlayerCard, ReelCaptionPanel, ReelNavArrows; shared logic `shorts/useReelActions.js`, `ReelStack.jsx`, `UnfollowDialog.jsx`; comments as a side panel | `ShortsPlayerPage` |
+| Movies | `/movies?category=` | `movies/MoviesPage.jsx`, TitleCard | `MoviesPage` |
+| Movie / Series details | `/movie/:id`, `/series/:id` | `movies/TitleDetails.jsx`, DetailsHero, EpisodeList, CastList, TitleNotFound; data `movies-sample-data.js` | `MovieDetailsPage`, `SeriesDetailsPage` |
+| Profile & Account | `/profile?tab=` | `my-account/ProfilePage.jsx` (Profile, My Plan, Devices, Support, FAQs) | `ProfilePage` |
+| My Stuff / My Library | `/my-stuff`, `/my-library` | `my-account/Desktop*/Phone*` + `my-stuff-store.js` (shared list: add/toggle/remove) | `MyStuffPage`, `more/*` |
+| More / Notifications / Get Bundle / Subscription History | as before | md: layouts; `bundles/SubscriptionHistoryPage.jsx` | `SubscriptionsPage`, `NotificationsPage`, `SubscriptionHistoryPage` |
+Wiring: `helpers/details-path.js` (title → /movie or /series); web Home posters + Search results open details; web "+"/details "+ My Stuff" use `my-stuff-store`; genre tiles → `/movies?category=`. Desktop pages sit on #1B1B1B (AppLayout `main`).
+Stand-in content notes: details backdrops mostly blurred posters (WONA has none); cast photos/episode stills are WONA samples spread across titles; reels' Save doesn't add to My Stuff (reels aren't catalogue titles).
+❓ Not done: real player (Watch Now shows "coming soon"); one shared Toast (Live TV, Shorts, Movies each have their own); bundle >500 KB (split per page later).

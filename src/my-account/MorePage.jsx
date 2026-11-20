@@ -2,12 +2,15 @@
 //   profile row (photo, name, green "plan · Active" pill) · My Stuff and My Library tiles
 //   · ACCOUNT list (Profile & Account, Notifications, Downloads, Settings, Help & Support) · red Sign Out.
 // Signed out: the profile row becomes "Log in or sign up", and Sign Out is hidden.
+// Desktop (the navbar avatar links here) draws a wider account hub instead: DesktopMorePage.jsx.
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Bookmark, Archive, ChevronRight, User, Bell, Download, Settings, CircleQuestionMark } from 'lucide-react'
 import { isSignedIn } from '@/sign-in-and-sign-up/session.js'
 import { useNotifications } from '@/notifications/notifications-store.js'
+import { useIsDesktop } from '@/helpers/useIsDesktop.js'
 import profileAvatar from './sample-images/profile-avatar.webp'
+import DesktopMorePage from './DesktopMorePage.jsx'
 
 // Sample profile until the account call (Step 3)
 const profile = { name: 'Kwame Mensah', avatar: profileAvatar, plan: 'Daily Max' }
@@ -48,6 +51,12 @@ function Row({ icon, title, subtitle, dot, onClick, last }) {
 }
 
 export default function MorePage() {
+  const isDesktop = useIsDesktop()
+  return isDesktop ? <DesktopMorePage /> : <PhoneMore />
+}
+
+// The phone screen
+function PhoneMore() {
   const navigate = useNavigate()
   const signedIn = isSignedIn()
   const unread = useNotifications().filter((m) => !m.read).length
@@ -66,7 +75,7 @@ export default function MorePage() {
     { id: 'notifications', icon: <Bell size={22} strokeWidth={1.8} />, title: 'Notifications', dot: unread > 0, onClick: () => navigate('/notifications') },
     { id: 'downloads', icon: <Download size={22} strokeWidth={1.8} />, title: 'Downloads', onClick: () => comingSoon('Downloads') },
     { id: 'settings', icon: <Settings size={22} strokeWidth={1.8} />, title: 'Settings', onClick: () => comingSoon('Settings') },
-    { id: 'help', icon: <CircleQuestionMark size={22} strokeWidth={1.8} />, title: 'Help & Support', onClick: () => comingSoon('Help & Support') },
+    { id: 'help', icon: <CircleQuestionMark size={22} strokeWidth={1.8} />, title: 'Help & Support', onClick: () => navigate('/profile?tab=support') },
   ]
 
   return (

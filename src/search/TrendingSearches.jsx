@@ -8,7 +8,7 @@ export default function TrendingSearches({ trending, onPick }) {
   return (
     <section>
       <div className="flex items-center justify-between">
-        <h2 className="text-[17px] font-bold italic">Top 5 Trending Searches</h2>
+        <h2 className="text-[17px] font-bold italic md:text-[calc(28*var(--d))]">Top 5 Trending Searches</h2>
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -26,10 +26,10 @@ export default function TrendingSearches({ trending, onPick }) {
               key={text}
               type="button"
               onClick={() => onPick(text)}
-              className="flex h-[53px] w-full items-center gap-3 border-b border-white/[0.07] text-left"
+              className="flex h-[53px] w-full items-center gap-3 border-b border-white/[0.07] text-left md:h-[calc(60*var(--d))]"
             >
               {/* Outlined yellow number: see-through fill + yellow outline */}
-              <span className="w-5 text-lg font-bold text-transparent" style={{ WebkitTextStroke: '1.2px var(--color-brand)' }}>
+              <span className="w-[26px] text-[28px] leading-none font-bold text-transparent md:w-[calc(36*var(--d))] md:text-[calc(36*var(--d))]" style={{ WebkitTextStroke: '1.4px var(--color-brand)' }}>
                 {i + 1}
               </span>
               <span className="min-w-0 flex-1 truncate text-sm text-white/85">{text}</span>

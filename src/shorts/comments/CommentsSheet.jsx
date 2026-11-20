@@ -4,13 +4,16 @@
 //
 // It keeps its own list: new comments go to the top, liking a comment adds 1, Reply fills in
 // "replying to @name". Nothing is sent to a server yet (no comments API).
+//
+// `panel`: the desktop player shows the same comments as a box beside the reel
+// (Figma "Comment Section - Desktop") instead of a sheet sliding up from the bottom.
 import { useRef, useState } from 'react'
 import { ArrowDownWideNarrow, X } from 'lucide-react'
 import CommentItem from './CommentItem.jsx'
 import CommentBox from './CommentBox.jsx'
 import NoComments from './NoComments.jsx'
 
-export default function CommentsSheet({ reel, myAvatar, requireSignIn, onClose, onCountChange }) {
+export default function CommentsSheet({ reel, myAvatar, requireSignIn, onClose, onCountChange, panel = false }) {
   const [comments, setComments] = useState(reel.comments)
   const [likedIds, setLikedIds] = useState([])
   const [replyingTo, setReplyingTo] = useState(null)
@@ -51,8 +54,15 @@ export default function CommentsSheet({ reel, myAvatar, requireSignIn, onClose, 
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[60] flex h-[67%] flex-col rounded-t-[28px] border-t border-white/20 bg-[#55574a]/95 backdrop-blur-xl">
-      <span className="mx-auto mt-2.5 h-1 w-9 shrink-0 rounded-full bg-white/40" />
+    <div
+      className={
+        panel
+          ? 'flex size-full flex-col overflow-hidden rounded-[calc(20*var(--d))] border border-white/15 bg-[#55574a]/95 pt-2.5 backdrop-blur-xl'
+          : 'fixed inset-x-0 bottom-0 z-[60] flex h-[67%] flex-col rounded-t-[28px] border-t border-white/20 bg-[#55574a]/95 backdrop-blur-xl'
+      }
+    >
+      {/* The little drag handle only makes sense on the phone sheet */}
+      {!panel && <span className="mx-auto mt-2.5 h-1 w-9 shrink-0 rounded-full bg-white/40" />}
 
       <div className="relative flex h-11 shrink-0 items-center justify-center border-b border-white/10">
         <h2 className="text-xs font-semibold text-brand">

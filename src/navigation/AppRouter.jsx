@@ -5,8 +5,10 @@ import AppLayout from './AppLayout.jsx'
 import NotFoundPage from './NotFoundPage.jsx'
 import HomePage from '@/home/HomePage.jsx'
 import LiveTvPage from '@/live-tv/LiveTvPage.jsx'
-import TvChannelsPage from '@/live-tv/TvChannelsPage.jsx'
 import MoviesPage from '@/movies/MoviesPage.jsx'
+import MovieDetailsPage from '@/movies/MovieDetailsPage.jsx'
+import SeriesDetailsPage from '@/movies/SeriesDetailsPage.jsx'
+import TvGuidePage from '@/live-tv/TvGuidePage.jsx'
 import ShortsPage from '@/shorts/ShortsPage.jsx'
 import ShortsPlayerPage from '@/shorts/ShortsPlayerPage.jsx'
 import SignInPage from '@/sign-in-and-sign-up/SignInPage.jsx'
@@ -26,8 +28,10 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/live-tv', element: <LiveTvPage /> },
-      { path: '/tv-channels', element: <TvChannelsPage /> },
       { path: '/movies', element: <MoviesPage /> },
+      { path: '/movie/:id', element: <MovieDetailsPage /> },
+      { path: '/series/:id', element: <SeriesDetailsPage /> },
+      { path: '/tv-guide', element: <TvGuidePage /> },
       { path: '/shorts', element: <ShortsPage /> },
       // ":id" is a blank to fill in: /shorts/tn1 opens the player with id "tn1"
       { path: '/shorts/:id', element: <ShortsPlayerPage /> },
