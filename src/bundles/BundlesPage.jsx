@@ -6,9 +6,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { ChevronLeft } from 'lucide-react'
-import { env } from '@/app-settings/env.js'
-import { isSignedIn } from '@/sign-in-and-sign-up/session.js'
-import SignInPrompt from '@/sign-in-and-sign-up/SignInPrompt.jsx'
+import { operator } from '@/app-settings/operators.js'
+import { isSignedIn } from '@/auth/session.js'
+import SignInPrompt from '@/auth/SignInPrompt.jsx'
 import PlanCard from './PlanCard.jsx'
 import SubscribeDialog from './SubscribeDialog.jsx'
 import { bundlePlans, isMtnOperator } from './bundle-plans.js'
@@ -17,7 +17,7 @@ export default function BundlesPage() {
   const navigate = useNavigate()
   const [chosenPlan, setChosenPlan] = useState(null)
   const [askSignIn, setAskSignIn] = useState(false)
-  const isMtn = isMtnOperator(env.usernamePrefix)
+  const isMtn = isMtnOperator(operator.username_prefix)
 
   const subscribe = (plan) => (isSignedIn() ? setChosenPlan(plan) : setAskSignIn(true))
 

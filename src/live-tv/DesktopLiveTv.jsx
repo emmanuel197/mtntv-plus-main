@@ -12,6 +12,7 @@ import DesktopFeaturedProgram from './DesktopFeaturedProgram.jsx'
 import OnAirSchedule from './OnAirSchedule.jsx'
 import LiveChannelsSidebar from './LiveChannelsSidebar.jsx'
 import LiveToast from './LiveToast.jsx'
+import { watchPath } from '@/helpers/watch-path.js'
 import { categories, featuredProgram, featuredMatch, channels, onAirToday, scheduleDate } from './live-tv-sample-data.js'
 
 // The curated programme shown before any channel is picked: phone data + the desktop-only scoreboard
@@ -118,7 +119,7 @@ export default function DesktopLiveTv() {
               <div ref={featuredRef} className="scroll-mt-[calc(120*var(--d))]">
                 <DesktopFeaturedProgram
                   program={featured}
-                  onWatchNow={() => setToast('The player is coming soon')}
+                  onWatchNow={() => navigate(watchPath('live', featured.id, featured.title))}
                   onFullGuide={() => navigate('/tv-guide')}
                 />
               </div>

@@ -6,7 +6,9 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Archive, Bell, Bookmark, ChevronRight, CircleQuestionMark, Download, History, Settings, Ticket, User } from 'lucide-react'
-import { isSignedIn } from '@/sign-in-and-sign-up/session.js'
+import { isSignedIn } from '@/auth/session.js'
+import { signOut } from '@/auth/auth-requests.js'
+import { goTo } from '@/auth/destination.js'
 import { useNotifications } from '@/notifications/notifications-store.js'
 import { sampleProfile, currentPlan } from './account-sample-data.js'
 
@@ -112,7 +114,7 @@ export default function DesktopMorePage() {
               </div>
               <button
                 type="button"
-                onClick={() => navigate('/signin')}
+                onClick={() => navigate('/signin?redirectTo=%2Fmore')}
                 className="h-[calc(48*var(--d))] shrink-0 rounded-full bg-brand px-[calc(32*var(--d))] text-[calc(16*var(--d))] font-semibold text-black hover:opacity-90"
               >
                 Log in
@@ -138,10 +140,10 @@ export default function DesktopMorePage() {
 
         {signedIn && (
           <div className="flex justify-center">
-            {/* Real sign-out (clearing the saved login) comes with sign-in in Step 4 */}
+            {/* Tells the server, forgets the saved session, then reloads Home signed out */}
             <button
               type="button"
-              onClick={() => navigate('/signin')}
+              onClick={() => signOut().then(() => goTo('/'))}
               className="h-[calc(48*var(--d))] w-[calc(160*var(--d))] rounded-full border border-white/80 bg-[#d92d20] text-[calc(16*var(--d))] font-semibold hover:opacity-90"
             >
               Sign Out

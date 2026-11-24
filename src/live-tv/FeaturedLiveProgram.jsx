@@ -5,10 +5,13 @@
 //   text column left (title 18px bold italic, 2 lines), 130×130 picture right · time row 11px · 4px bar
 //   Watch Now 109×36 (yellow) and Full Guide 116×36 (dark, thin border), 8px apart
 import { Play, List } from 'lucide-react'
+import { useNavigate } from 'react-router'
+import { watchPath } from '@/helpers/watch-path.js'
 import LiveBadge from '@/shared-ui/LiveBadge.jsx'
 
 export default function FeaturedLiveProgram({ program }) {
   const p = program
+  const navigate = useNavigate()
   return (
     <section className="px-page">
       <div className="flex items-center justify-between gap-3">
@@ -48,6 +51,7 @@ export default function FeaturedLiveProgram({ program }) {
       <div className="mt-[18px] flex gap-2">
         <button
           type="button"
+          onClick={() => navigate(watchPath('live', p.id, p.title))}
           className="flex h-9 w-[109px] items-center justify-center gap-1.5 rounded-full bg-brand text-[13px] font-semibold text-black"
         >
           <Play size={14} />

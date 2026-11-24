@@ -1,6 +1,6 @@
 // The "Episodes" part of the series details page, ported from WONA's SeriesDetailsPage:
 // a season picker (‹ Season 1/3 ›) and the list of that season's episodes.
-// Tapping an episode calls onPlay (for now that shows "Player coming soon").
+// Tapping an episode calls onPlay (opens the watch page).
 // Desktop: one wide row per episode (number, picture, title, length, description).
 // Phone: one card per episode (picture with "E1 · Title" on it, description under it),
 // like WONA's phone episode cards.

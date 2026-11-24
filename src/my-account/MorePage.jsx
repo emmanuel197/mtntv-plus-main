@@ -6,7 +6,9 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Bookmark, Archive, ChevronRight, User, Bell, Download, Settings, CircleQuestionMark } from 'lucide-react'
-import { isSignedIn } from '@/sign-in-and-sign-up/session.js'
+import { isSignedIn } from '@/auth/session.js'
+import { signOut } from '@/auth/auth-requests.js'
+import { goTo } from '@/auth/destination.js'
 import { useNotifications } from '@/notifications/notifications-store.js'
 import { useIsDesktop } from '@/helpers/useIsDesktop.js'
 import profileAvatar from './sample-images/profile-avatar.webp'
@@ -99,7 +101,7 @@ function PhoneMore() {
           <ChevronRight size={20} className="text-white/80" />
         </button>
       ) : (
-        <button type="button" onClick={() => navigate('/signin')} className="flex w-full items-center gap-3 px-[21px] py-4 text-left">
+        <button type="button" onClick={() => navigate('/signin?redirectTo=%2Fmore')} className="flex w-full items-center gap-3 px-[21px] py-4 text-left">
           <span className="flex size-[72px] shrink-0 items-center justify-center rounded-full bg-surface text-white/60">
             <User size={32} />
           </span>
@@ -127,10 +129,10 @@ function PhoneMore() {
 
       {signedIn && (
         <div className="flex justify-center px-[21px] pt-7 pb-6">
-          {/* Real sign-out (clearing the saved login) comes with sign-in in Step 4 */}
+          {/* Tells the server, forgets the saved session, then reloads Home signed out */}
           <button
             type="button"
-            onClick={() => navigate('/signin')}
+            onClick={() => signOut().then(() => goTo('/'))}
             className="h-[42px] w-28 rounded-full border border-white/80 bg-[#d92d20] text-sm font-semibold hover:opacity-90"
           >
             Sign Out

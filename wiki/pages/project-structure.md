@@ -15,16 +15,20 @@ All routes render inside `navigation/AppLayout.jsx` (desktop navbar ≥768px; ph
 Route list: `navigation/AppRouter.jsx`. Tab list shared by both bars: `navigation/nav-tabs.js`.
 | Path | Page file |
 |---|---|
-| `/` | `home/HomePage.jsx` |
-| `/live-tv` | `live-tv/LiveTvPage.jsx` |
-| `/shorts` | `shorts/ShortsPage.jsx` |
+**Open to everyone:**
+| `/` | `home/HomePage.jsx` (signed out: shop window — taps lead to Sign In) |
+| `/shorts`, `/shorts/:id` | `shorts/ShortsPage.jsx`, `shorts/ShortsPlayerPage.jsx` (signed out: "Join the conversation" sheet for comments) |
+| `/signin`, `/signup` | `auth/NumberStep.jsx` (one screen, two modes) |
+| `/verify-code` | `auth/VerifyCodePage.jsx` |
+| `/out-of-region` | `auth/OutOfRegionPage.jsx` |
+**Account needed** — one group in AppRouter wrapped by `navigation/SignedInOnly.jsx` (signed out → `/signin?redirectTo=<page>`, back there after sign-in):
+| `/live-tv`, `/tv-guide` | `live-tv/` |
+| `/movies`, `/movie/:id`, `/series/:id` | `movies/` |
+| `/watch/:kind/:id` | `video-player/WatchPage.jsx` (kind = movie, episode, live, trailer): bundle check → "no active bundle" + Get Bundle, or the player (placeholder until Step 5) |
 | `/search` | `search/SearchPage.jsx` |
-| `/more` | `my-account/MorePage.jsx` |
-| `/bundles` | `bundles/BundlesPage.jsx` (Get Bundle pill) · `/subscription-history` → `bundles/SubscriptionHistoryPage.jsx` |
-| `/notifications` | `notifications/NotificationsPage.jsx` (bell) |
-| `/profile`, `/my-stuff`, `/my-library` | `my-account/` placeholders (opened from More) |
-| `/shorts/:id` | `shorts/ShortsPlayerPage.jsx` (reel player) |
-| `/signin`, `/signup` | `sign-in-and-sign-up/` placeholders |
+| `/more`, `/profile`, `/my-stuff`, `/my-library` | `my-account/` |
+| `/bundles`, `/subscription-history` | `bundles/` |
+| `/notifications` | `notifications/NotificationsPage.jsx` |
 | `*` | `navigation/NotFoundPage.jsx` |
 Home is built (mobile, sample data — see `figma-designs.md` measurements); other pages are placeholders (`shared-ui/PagePlaceholder.jsx`). Logo: `images-and-icons/mtn-tv-plus-logo.png` (192px copy of the user-supplied `-original.png`), used via `shared-ui/MtnTvLogo.jsx`.
 Desktop navbar layout is a guess — the web Figma frames weren't readable (REST limit). ⚠️ ASSUMPTION
@@ -38,12 +42,12 @@ Only code used by two or more areas goes in `shared-ui/` or `helpers/`. Folders 
 src/
   main.jsx                 starts the app (mounts <App/>, loads global styles)
   App.jsx                  top-level component
-  app-settings/            env.js — the only file that reads .env values
+  app-settings/            env.js — the only file that reads .env values; operators.js — the operator list (AfriPlay's), .env picks one by VITE_OPERATOR_UID
   styles/                  global.css (whole-app styles) + design-tokens.css (colours, fonts)
   server-connection/       talking to Uniqcast + CRM: request setup, tokens, refresh on 401
   app-state/               Redux store setup (each area keeps its own slice in its folder)
   navigation/              routes, desktop navbar, phone bottom bar, signed-in guard
-  sign-in-and-sign-up/     network check, OTP, sign-up, login screens + calls
+  auth/                    sign-in, sign-up, code + out-of-region screens, session, sign-in calls (renamed from sign-in-and-sign-up, 2026-11-24)
   home/                    home screen: banners, content rows
   movies-and-series/       movie and series detail pages, episodes
   video-player/            HLS player, trailers, keep-watching bookmarks

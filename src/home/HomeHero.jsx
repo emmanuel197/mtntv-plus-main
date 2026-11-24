@@ -5,6 +5,8 @@
 //   category tabs 58px from top · round poster 253px, 90px from top
 //   then a column with 12px between items: tag pill 26 · title art 60 · genres 16 · dots 8 · buttons 36
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { watchPath } from '@/helpers/watch-path.js'
 import { Play, Plus } from 'lucide-react'
 import CategoryTabs from '@/shared-ui/CategoryTabs.jsx'
 
@@ -16,6 +18,7 @@ export default function HomeHero({ slides }) {
   const [index, setIndex] = useState(0)
   const [category, setCategory] = useState('All')
   const slide = slides[index]
+  const navigate = useNavigate()
 
   // Move to the next slide every few seconds. Restarts the timer when the slide changes,
   // so tapping a dot gives that slide its full time.
@@ -85,6 +88,7 @@ export default function HomeHero({ slides }) {
         <div className="flex items-center gap-1.5">
           <button
             type="button"
+            onClick={() => navigate(watchPath('movie', slide.id, slide.title))}
             className="flex h-9 w-[106px] items-center justify-center gap-1.5 rounded-full bg-brand text-sm font-bold text-black italic"
           >
             <Play size={12} fill="currentColor" />

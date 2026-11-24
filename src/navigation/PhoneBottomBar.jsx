@@ -5,9 +5,12 @@
 import { NavLink, useLocation } from 'react-router'
 import { NAV_TABS } from './nav-tabs.js'
 import MaskIcon from './MaskIcon.jsx'
+import { isAuthPage } from './auth-pages.js'
 
 export default function PhoneBottomBar() {
   const { pathname } = useLocation()
+  // No tab bar on the sign-in screens
+  if (isAuthPage(pathname)) return null
 
   return (
     <nav className="fixed bottom-4 left-1/2 z-40 flex h-[66px] w-[calc(100%-46px)] max-w-[348px] -translate-x-1/2 items-center justify-center gap-3 rounded-full border border-white/15 bg-tabbar/85 backdrop-blur-md md:hidden">

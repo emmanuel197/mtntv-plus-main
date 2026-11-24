@@ -4,6 +4,8 @@
 // Changes slide every 8 seconds. Height: the design's 1117/1728 shape, but never taller than the window.
 // All sizes are design pixels (var(--d)) of the 1728px design.
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { watchPath } from '@/helpers/watch-path.js'
 import { Play, Plus, Star, Check } from 'lucide-react'
 
 const SLIDE_SECONDS = 8
@@ -12,6 +14,7 @@ export default function DesktopHero({ slides }) {
   const [index, setIndex] = useState(0)
   const [inMyStuff, setInMyStuff] = useState({}) // which slides were added to My Stuff
   const slide = slides[index]
+  const navigate = useNavigate()
 
   useEffect(() => {
     const timer = setTimeout(() => setIndex((i) => (i + 1) % slides.length), SLIDE_SECONDS * 1000)
@@ -63,6 +66,7 @@ export default function DesktopHero({ slides }) {
           <div className="flex items-stretch gap-[calc(16*var(--d))]">
             <button
               type="button"
+              onClick={() => navigate(watchPath('movie', slide.id, slide.title))}
               className="flex h-[calc(55*var(--d))] items-center gap-[calc(10*var(--d))] rounded-full bg-brand px-[calc(26*var(--d))] text-[calc(18*var(--d))] font-medium text-black"
             >
               <span className="flex size-[calc(22*var(--d))] items-center justify-center rounded-full bg-black">

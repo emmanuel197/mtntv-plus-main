@@ -106,3 +106,11 @@ AfriPlay render order: banners → 1st VOD category → 1st channel category →
 - Run `npm install` after pulling commits that change dependencies.
 - `git push` can hang on the credential prompt → `gh auth setup-git` once.
 - Check merge-base/overlap before merging an old branch (it once clobbered the wiki).
+
+## Sign-in rules and testing (MTN TV+, 2026-11-24)
+- WONA's rule: only the landing page is open signed out; every other page is behind the guard. MTN TV+ follows it but also leaves Shorts open (MTN design has a signed-out sheet). WONA's guard saved no return path; ours always passes `redirectTo`.
+- Playback gate (WONA WatchPage): CRM `GET /api/orders/?operator_uid&subscriber_uid=<prefix+number>&limit=30&status=Active`. A bundle counts if price ≠ 0, status Active, and now is between purchase and end date/time. No orders → `{status:'ok', data:[], message:'no subscriptions available for this user'}`.
+- To test the code step off MTN data, run only the test server against `afriplayghana` (no IP check): `VITE_OPERATOR_UID=afriplayghana npx vite --port 5175` (id + prefix come from `app-settings/operators.js`). Shell env beats `.env.local`, so the file stays as it is.
+- The CRM answers a wrong code with `status != ok` and the text "invalid OTP" — show our own wording.
+- Code boxes: work out each change from a ref holding the latest six digits, not from what was on screen last time. Otherwise fast typing (or a phone filling in the SMS code) overwrites box 1.
+- Renaming a `src/` folder on Windows fails with "Permission denied" while a dev server or the editor is watching it. Stop the servers first, or copy the folder and then delete the old one.

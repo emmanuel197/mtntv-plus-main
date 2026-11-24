@@ -6,7 +6,7 @@
 // A "custom hook" (a function starting with `use`) keeps this state in one place, so both
 // players behave exactly the same and only their layouts differ.
 import { useEffect, useRef, useState } from 'react'
-import { isSignedIn } from '@/sign-in-and-sign-up/session.js'
+import { isSignedIn } from '@/auth/session.js'
 
 export function useReelActions(reel) {
   const [liked, setLiked] = useState(false)

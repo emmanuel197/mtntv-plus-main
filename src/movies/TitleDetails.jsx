@@ -1,9 +1,11 @@
 // Everything on a details page once we know which title it is. Used by both MovieDetailsPage
 // and SeriesDetailsPage (they only differ in the Episodes part, which shows when the title has seasons).
 // Order (as WONA): hero → Episodes (series only) → Cast → More Like This.
-// There is no video player yet, so Watch Now, Trailer and episodes show "Player coming soon".
+// Watch Now, Trailer and episodes open the watch page (video-player/WatchPage.jsx), which checks the bundle.
 // "+ My Stuff" adds to / removes from the shared My Stuff list (my-account/my-stuff-store.js).
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { watchPath } from '@/helpers/watch-path.js'
 import { useIsInMyStuff, toggleMyStuff } from '@/my-account/my-stuff-store.js'
 import { titles } from '@/sample-content/catalog.js'
 import { useIsDesktop } from '@/helpers/useIsDesktop.js'
@@ -22,6 +24,7 @@ export default function TitleDetails({ details }) {
   const inMyStuff = useIsInMyStuff(details.id)
   const [seasonIndex, setSeasonIndex] = useState(0)
   const [message, flash] = useFlashMessage()
+  const navigate = useNavigate()
   const moreLikeThis = getMoreLikeThis(details.id)
 
   // The browser doesn't scroll up by itself when the address changes, so opening a title from
@@ -33,8 +36,9 @@ export default function TitleDetails({ details }) {
   const heroProps = {
     details,
     inMyStuff,
-    onWatch: () => flash('Player coming soon'),
-    onTrailer: () => flash('Trailer player coming soon'),
+    // A series' Watch Now starts its first episode
+    onWatch: () => navigate(watchPath(details.seasons ? 'episode' : 'movie', details.id, details.title)),
+    onTrailer: () => navigate(watchPath('trailer', details.id, details.title)),
     onToggleMyStuff: () => {
       // Save the catalogue record (poster, title, year…), which is what the My Stuff page shows
       const record = Object.values(titles).find((t) => t.id === details.id) ?? details
@@ -45,7 +49,7 @@ export default function TitleDetails({ details }) {
     seasons: details.seasons,
     seasonIndex,
     onSeasonChange: setSeasonIndex,
-    onPlay: (ep) => flash(`Player coming soon (E${ep.number} · ${ep.title})`),
+    onPlay: (ep) => navigate(watchPath('episode', ep.id, `${details.title} · E${ep.number} ${ep.title}`)),
   }
 
   if (isDesktop) {

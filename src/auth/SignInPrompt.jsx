@@ -1,11 +1,14 @@
 // "Join the conversation" sheet: shown when a signed-out person tries to like, comment, follow or save.
 // Lives here (not in shorts/) because it's about signing in, and other screens can reuse it later.
 // Figma: dark sheet (#272727) from the bottom, play icon in a yellow ring, two buttons, a "continue" link.
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { Play } from 'lucide-react'
 
 export default function SignInPrompt({ onClose }) {
   const navigate = useNavigate()
+  const { pathname, search } = useLocation()
+  // After signing in, come back to this exact page (e.g. the reel you were on)
+  const back = `?redirectTo=${encodeURIComponent(pathname + search)}`
   return (
     // The dark backdrop: tapping it closes the sheet
     <div className="fixed inset-0 z-[70] flex flex-col justify-end bg-black/60" onClick={onClose}>
@@ -23,14 +26,14 @@ export default function SignInPrompt({ onClose }) {
 
         <button
           type="button"
-          onClick={() => navigate('/signin')}
+          onClick={() => navigate(`/signin${back}`)}
           className="mt-5 h-[47px] w-full rounded-full bg-gradient-to-r from-[#c8b800] to-brand text-sm font-bold"
         >
           Log In to MTN TV+
         </button>
         <button
           type="button"
-          onClick={() => navigate('/signup')}
+          onClick={() => navigate(`/signup${back}`)}
           className="mt-3 h-[47px] w-full rounded-full border border-white/30 bg-white/15 text-sm"
         >
           Create a free account

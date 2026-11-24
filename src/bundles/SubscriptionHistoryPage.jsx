@@ -7,7 +7,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { ChevronLeft, X } from 'lucide-react'
-import { isSignedIn } from '@/sign-in-and-sign-up/session.js'
+import { isSignedIn } from '@/auth/session.js'
 import { sampleHistory } from '@/my-account/account-sample-data.js'
 
 // "?empty" in the address shows the no-bundles card, for testing (as in WONA)
@@ -92,7 +92,7 @@ export default function SubscriptionHistoryPage() {
         {!signedIn ? (
           <div className="mt-5 flex flex-col items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 md:mt-[calc(32*var(--d))] md:gap-[calc(16*var(--d))] md:rounded-[calc(24*var(--d))] md:p-[calc(40*var(--d))]">
             <p className="text-[13px] text-white/90 md:text-[calc(16*var(--d))]">Log in to see the bundles you've bought.</p>
-            <Link to="/signin" className={yellowButton}>
+            <Link to="/signin?redirectTo=%2Fsubscription-history" className={yellowButton}>
               Log in or sign up
             </Link>
           </div>

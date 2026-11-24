@@ -14,7 +14,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router'
 import { ChevronLeft, ChevronUp, Ellipsis } from 'lucide-react'
-import SignInPrompt from '@/sign-in-and-sign-up/SignInPrompt.jsx'
+import SignInPrompt from '@/auth/SignInPrompt.jsx'
 import { useIsDesktop } from '@/helpers/useIsDesktop.js'
 import ReelActionRail from './ReelActionRail.jsx'
 import ReelCaption from './ReelCaption.jsx'

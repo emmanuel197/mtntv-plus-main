@@ -8,7 +8,7 @@
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { Minus, Plus } from 'lucide-react'
-import { isSignedIn } from '@/sign-in-and-sign-up/session.js'
+import { isSignedIn } from '@/auth/session.js'
 import { sampleProfile, currentPlan, sampleDevices, supportRows, sampleFaqs } from './account-sample-data.js'
 import { BackButton } from './AccountUi.jsx'
 
@@ -187,7 +187,7 @@ function SignInNote() {
   return (
     <div className={`flex flex-col items-start gap-3 p-5 md:max-w-[calc(560*var(--d))] md:gap-[calc(16*var(--d))] md:p-[calc(32*var(--d))] ${card}`}>
       <p className={`text-white/80 ${text14}`}>Log in to see and change your account details.</p>
-      <Link to="/signin" className={`flex items-center ${yellowButton}`}>
+      <Link to="/signin?redirectTo=%2Fprofile" className={`flex items-center ${yellowButton}`}>
         Log in or sign up
       </Link>
     </div>

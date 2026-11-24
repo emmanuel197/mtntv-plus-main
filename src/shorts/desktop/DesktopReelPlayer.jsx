@@ -8,7 +8,7 @@
 // shared with the phone player). Wheel and ↑ ↓ keys change reel; Esc closes what's open, then goes back.
 import { useEffect, useRef, useState } from 'react'
 import { ChevronLeft } from 'lucide-react'
-import SignInPrompt from '@/sign-in-and-sign-up/SignInPrompt.jsx'
+import SignInPrompt from '@/auth/SignInPrompt.jsx'
 import ReelActionRail from '../ReelActionRail.jsx'
 import ReelToast from '../ReelToast.jsx'
 import ShareReelSheet from '../ShareReelSheet.jsx'
